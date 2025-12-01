@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   Atom, FlaskConical, Leaf, Skull, Crown, 
   ChevronRight, ArrowLeft, Settings2, Sparkles, Loader, Globe,
-  Sun, Moon
+  Sun, Moon, Volume2, VolumeX
 } from 'lucide-react';
 import { SUBJECTS, UI_TEXT } from './constants';
 import { AppView, Subject, QuizConfig, QuizResult, Question, Language } from './types';
@@ -24,6 +24,15 @@ const App = () => {
       return localStorage.getItem('theme') as 'light' | 'dark' || 'dark';
     }
     return 'dark';
+  });
+
+  // Initialize sound preference from localStorage or default to true
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('soundEnabled');
+      return stored === null ? true : stored === 'true';
+    }
+    return true;
   });
 
   const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null);
@@ -49,6 +58,11 @@ const App = () => {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  useEffect(() => {
+    soundManager.toggle(soundEnabled);
+    localStorage.setItem('soundEnabled', String(soundEnabled));
+  }, [soundEnabled]);
+
   // -- Handlers --
 
   const toggleTheme = () => {
@@ -59,6 +73,16 @@ const App = () => {
   const toggleLanguage = () => {
     soundManager.play('click');
     setLanguage(prev => prev === 'en' ? 'hi' : 'en');
+  };
+
+  const toggleSound = () => {
+    const newState = !soundEnabled;
+    setSoundEnabled(newState);
+    if (newState) {
+      // Force enable immediately to play the feedback sound
+      soundManager.toggle(true);
+      soundManager.play('click');
+    }
   };
 
   const handleSubjectSelect = (subject: Subject) => {
@@ -401,6 +425,15 @@ const App = () => {
         </div>
         
         <div className="flex items-center gap-3">
+          {/* Sound Toggle */}
+          <button
+            onClick={toggleSound}
+            className="p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300"
+            aria-label="Toggle sound"
+          >
+            {soundEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
+          </button>
+
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
