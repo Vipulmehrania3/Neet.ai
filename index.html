@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             fontFamily: {
@@ -62,6 +63,11 @@
     </script>
     <style>
       body {
+        /* Default to dark mode colors if JS hasn't loaded, or handling via classes */
+        background-color: #f8fafc;
+        color: #0f172a;
+      }
+      .dark body {
         background-color: #0f172a;
         color: #f8fafc;
       }
@@ -71,13 +77,22 @@
         height: 8px;
       }
       ::-webkit-scrollbar-track {
+        background: #e2e8f0;
+      }
+      .dark ::-webkit-scrollbar-track {
         background: #1e293b;
       }
       ::-webkit-scrollbar-thumb {
-        background: #334155;
+        background: #94a3b8;
         border-radius: 4px;
       }
+      .dark ::-webkit-scrollbar-thumb {
+        background: #334155;
+      }
       ::-webkit-scrollbar-thumb:hover {
+        background: #64748b;
+      }
+      .dark ::-webkit-scrollbar-thumb:hover {
         background: #475569;
       }
       .scrollbar-hide::-webkit-scrollbar {
@@ -102,7 +117,7 @@
 }
 </script>
 </head>
-  <body>
+  <body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 transition-colors duration-300">
     <div id="root"></div>
   </body>
 </html>

@@ -73,13 +73,13 @@ const QuizInterface: React.FC<QuizInterfaceProps> = ({ questions, language, onCo
   };
 
   return (
-    <div className="max-w-3xl mx-auto w-full">
+    <div className="max-w-3xl mx-auto w-full px-4">
       {/* Header / Progress */}
       <div className="mb-6">
-        <div className="flex justify-between items-center text-sm font-semibold text-slate-400 mb-2 tracking-wider uppercase">
+        <div className="flex justify-between items-center text-sm font-semibold text-slate-500 dark:text-slate-400 mb-2 tracking-wider uppercase">
           <span>{language === 'hi' ? 'प्रश्न' : 'Question'} {currentIndex + 1} / {questions.length}</span>
           <div className="flex gap-2">
-             <span className="flex items-center gap-1 bg-slate-800 px-3 py-1 rounded-full text-slate-300 border border-slate-700">
+             <span className="flex items-center gap-1 bg-white dark:bg-slate-800 px-3 py-1 rounded-full text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">
                <Clock className="w-3 h-3"/> Test Mode
              </span>
           </div>
@@ -93,7 +93,7 @@ const QuizInterface: React.FC<QuizInterfaceProps> = ({ questions, language, onCo
               onClick={() => changeQuestion(idx)}
               className={`h-1.5 min-w-[1.5rem] flex-1 rounded-full transition-all ${
                 idx === currentIndex ? 'bg-brand-400 scale-110' : 
-                answers[idx] !== -1 ? 'bg-brand-800' : 'bg-slate-800'
+                answers[idx] !== -1 ? 'bg-brand-600 dark:bg-brand-800' : 'bg-slate-300 dark:bg-slate-800'
               }`}
             />
           ))}
@@ -109,11 +109,11 @@ const QuizInterface: React.FC<QuizInterfaceProps> = ({ questions, language, onCo
       >
         <div 
           key={currentIndex} 
-          className={`bg-slate-800/80 border border-slate-700 rounded-2xl p-6 md:p-8 shadow-2xl backdrop-blur-md animate-slide-in-${slideDirection}`}
+          className={`bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 md:p-8 shadow-xl dark:shadow-2xl backdrop-blur-md animate-slide-in-${slideDirection}`}
         >
           {/* Question Text */}
-          <h3 className="text-xl md:text-2xl font-display font-semibold text-slate-100 mb-8 leading-relaxed">
-            <span className="text-brand-500 mr-2">{currentIndex + 1}.</span>
+          <h3 className="text-xl md:text-2xl font-display font-semibold text-slate-900 dark:text-slate-100 mb-8 leading-relaxed">
+            <span className="text-brand-600 dark:text-brand-500 mr-2">{currentIndex + 1}.</span>
             {currentQuestion.text}
           </h3>
 
@@ -127,13 +127,15 @@ const QuizInterface: React.FC<QuizInterfaceProps> = ({ questions, language, onCo
                   onClick={() => handleOptionSelect(idx)}
                   className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex items-center justify-between group
                     ${isSelected 
-                      ? 'border-brand-500 bg-brand-500/10 text-brand-100 shadow-brand-500/10 shadow-lg' 
-                      : 'border-slate-700 bg-slate-800/50 hover:bg-slate-700/50 hover:border-slate-500 text-slate-300'
+                      ? 'border-brand-500 bg-brand-50 dark:bg-brand-500/10 text-brand-900 dark:text-brand-100 shadow-lg shadow-brand-500/10' 
+                      : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:border-slate-400 dark:hover:border-slate-500 text-slate-700 dark:text-slate-300'
                     }`}
                 >
                   <div className="flex items-center gap-4">
                     <span className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-bold border transition-colors ${
-                      isSelected ? 'border-brand-500 text-brand-500 bg-brand-500/20' : 'border-slate-600 text-slate-500'
+                      isSelected 
+                        ? 'border-brand-500 text-brand-600 dark:text-brand-500 bg-brand-100 dark:bg-brand-500/20' 
+                        : 'border-slate-300 dark:border-slate-600 text-slate-500'
                     }`}>
                       {String.fromCharCode(65 + idx)}
                     </span>
@@ -154,14 +156,14 @@ const QuizInterface: React.FC<QuizInterfaceProps> = ({ questions, language, onCo
           disabled={currentIndex === 0}
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all ${
             currentIndex === 0 
-              ? 'bg-slate-800/50 text-slate-600 cursor-not-allowed' 
-              : 'bg-slate-800 text-white hover:bg-slate-700 border border-slate-700'
+              ? 'bg-slate-100 dark:bg-slate-800/50 text-slate-400 dark:text-slate-600 cursor-not-allowed' 
+              : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
           }`}
         >
           <ChevronLeft className="w-5 h-5" /> {t.prev}
         </button>
 
-        <div className="text-slate-500 text-sm hidden md:block">
+        <div className="text-slate-400 dark:text-slate-500 text-sm hidden md:block">
            {t.swipe}
         </div>
 

@@ -2,13 +2,9 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { Question, SubjectId, Language } from '../types';
 
-// Ensure API key is present
-const apiKey = process.env.API_KEY || '';
-if (!apiKey) {
-  console.error("API Key is missing!");
-}
-
-const ai = new GoogleGenAI({ apiKey });
+// Use process.env.API_KEY as per strict coding guidelines.
+// This assumes the environment variable is properly configured and accessible.
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const generateQuizQuestions = async (
   subjectId: SubjectId,
