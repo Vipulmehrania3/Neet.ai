@@ -1,0 +1,8 @@
+{
+  "name": "NEET.ai Practice",
+  "description": "An AI-powered practice tool for NEET aspirants offering subject-wise quizzes, NCERT explanations, and doubt resolution.",
+  "requestFramePermissions": [
+    "microphone",
+    "camera"
+  ]
+}
