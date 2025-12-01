@@ -1,10 +1,11 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { Question, SubjectId, Language } from '../types';
 
-// Use process.env.API_KEY as per strict coding guidelines.
-// This assumes the environment variable is properly configured and accessible.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const getAIClient = () => {
+  // The API key must be obtained exclusively from the environment variable process.env.API_KEY.
+  // Assume this variable is pre-configured, valid, and accessible in the execution context.
+  return new GoogleGenAI({ apiKey: process.env.API_KEY });
+};
 
 export const generateQuizQuestions = async (
   subjectId: SubjectId,
@@ -15,6 +16,8 @@ export const generateQuizQuestions = async (
   language: Language
 ): Promise<Question[]> => {
   
+  const ai = getAIClient();
+  // Using gemini-2.5-flash for basic text tasks (quiz generation)
   const model = "gemini-2.5-flash";
   
   const langInstruction = language === 'hi' 
@@ -77,10 +80,13 @@ export const generateQuizQuestions = async (
 };
 
 export const resolveDoubt = async (imageBase64: string | null, userQuery: string): Promise<string> => {
+  const ai = getAIClient();
   const model = "gemini-2.5-flash"; 
   
   try {
-    const parts: any[] = [{ text: userQuery || "Explain this concept clearly for a NEET aspirant." }];
+    const parts: {text?: string, inlineData?: {mimeType: string, data: string}}[] = [
+      { text: userQuery || "Explain this concept clearly for a NEET aspirant." }
+    ];
     
     if (imageBase64) {
       // Remove data URL prefix if present
